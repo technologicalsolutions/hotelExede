@@ -1,0 +1,91 @@
+﻿@model ExedePrueba.ViewModels.ResponseHotel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Crear</h2>
+
+<div class="row">
+    @using (Html.BeginForm("Create", "Hotels", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Hotel</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Capacidad, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Capacidad, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Capacidad, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Ciudad, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Ciudad, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Ciudad, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    <div class="mb-3">
+                        <label for="Imagen" class="form-label">Imagen Hotel</label>
+                        <input class="form-control" type="file" id="Foto" name="Foto">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Activo, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.Activo)
+                        @Html.ValidationMessageFor(model => model.Activo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Crear" class="btn btn-success" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div class="row">
+    @Html.ActionLink("Volver a la lista", "Index")
+</div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+        function Preview(base64) {
+            document
+                .getElementById('Previewimg')
+                .src = base64;
+
+            var myModal = new bootstrap.Modal(document.getElementById('exampleModal'), {
+                keyboard: false
+            });
+
+            myModal.show()
+        }
+    </script>
+    @Scripts.Render("~/bundles/jqueryval")
+
+}

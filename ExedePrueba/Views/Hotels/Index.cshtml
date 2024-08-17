@@ -1,0 +1,111 @@
+﻿@model IEnumerable<ExedePrueba.Models.Hotel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Hoteles</h2>
+
+<div class="row">
+    @Html.ActionLink("Crear nuevo hotel", "Create")
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Capacidad)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Ciudad)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Imagen)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Activo)
+                </th>
+                <th>Habitaciones</th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Capacidad)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ciudad)
+                    </td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.Imagen))
+                        {
+                            <button type="button" class="btn btn-primary" onclick="Preview('@item.Imagen')">Ver Imagen</button>
+                        }
+                        else
+                        {
+                            <p>No ha cargado ninguna imagen</p>
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Activo)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Lista habitaciones", "Index", "Habitacions", new { id = item.Id }, null)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Detalle", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("Eliminar", "Delete", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+    <div class="row">
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Previsual imagen</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col">
+                                <img id="Previewimg" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        function Preview(base64) {
+            document
+                .getElementById('Previewimg')
+                .src = base64;
+
+            var myModal = new bootstrap.Modal(document.getElementById('exampleModal'), {
+                keyboard: false
+            });
+
+            myModal.show()
+        }
+    </script>
+}
